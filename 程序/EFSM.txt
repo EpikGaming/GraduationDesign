@@ -1,0 +1,10 @@
+T1:(S1,S2);event={Initial-AB()};cond={};action={L1,L2=0m;V1,V2,V3="OFF";Q1,Q2,Q3=0}
+T2:(S2,S3);event={Limit-H0()};cond={H0<=H2};action={V1="ON";V2="ON";V3="ON"}
+T3:(S2,S4);event={Error-H0()};cond={H0>H2};action={output(H0);output("error")}
+T4:(S3,S5);event={Add-AB()};cond={};action={Q1=Q1+V1;L1=L1+Q1-Q2;Q2=L1+V2;L2=L2+Q2-Q3;Q3=L2+V3}
+T5:(S5,S3);event={Low-H0()};cond={L1<=H1&&L2<H0};action={Q1++}
+T6:(S5,S6);event={High-H0()};cond={L1<=H1&&L2>H0};action={}
+T7:(S6,S3);event={If-L2()};cond={L2<=H2};action={Q1--}
+T8:(S6,S7);event={Error-L2()};cond={L2>H2};action={output(L2);output("error")}
+T9:(S5,S8);event={Balance-L2()};cond={L1<=H1&&L2==H0};action={output("OK")}
+T10:(S5,S9);event={Error-L1()};cond={L1>H1};action={output(L1);output("error")}
